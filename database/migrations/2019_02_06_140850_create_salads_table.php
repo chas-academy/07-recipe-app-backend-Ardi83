@@ -16,7 +16,8 @@ class CreateSaladsTable extends Migration
         Schema::create('salads', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('ingredients');
+            $table->string('description');
+            $table->string('recipe');
             $table->image('url');
             $table->enum('allergic_type',['normal', 'vegan', 'vegetarian', 'lactoseFree', 'glutenFree'])->default('normal');
             $table->float('energy')->nullable();
