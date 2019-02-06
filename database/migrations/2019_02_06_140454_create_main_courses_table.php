@@ -15,6 +15,12 @@ class CreateMainCoursesTable extends Migration
     {
         Schema::create('main_courses', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->string('ingredients');
+            $table->image('url');
+            $table->enum('allergic_type',['normal', 'vegan', 'vegetarian', 'lactoseFree', 'glutenFree'])->default('normal');
+            $table->float('energy')->nullable();
+            $table->time('cooking_time')->nullable();
             $table->timestamps();
         });
     }
