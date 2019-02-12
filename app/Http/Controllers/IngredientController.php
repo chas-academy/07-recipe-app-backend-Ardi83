@@ -3,81 +3,62 @@
 namespace App\Http\Controllers;
 
 use App\Ingredient;
+use App\Recipe;
+use App\Http\Requests\IngredientRequest;
+use App\http\Resources\IngredientResource;
 use Illuminate\Http\Request;
 
 class IngredientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    
+    public function __construct()
     {
-        //
+        $this->middleware('auth:api')->except('index', 'show');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function index(Recipe $recipe)
+    {
+        return IngredientResource::collection($recipe->ingredients);
+    }
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(Recipe $recipe, IngredientRequest $request)
     {
-        //
+        // $ingredient = Ingredient::create(
+        //     $request->all()
+        // );
+
+        $ingredient = new Ingredient;
+        $ingredient->name = $request->name;
+        $id = $ingredient->id;
+        $ingredient->save();
+        $ingredient->amount = $ingredient->recipes()->attach($recipe, ['amount' => $request->amount]);
+        
+        return response([
+            'data' => new IngredientResource($ingredient)
+        ],201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
     public function show(Ingredient $ingredient)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Ingredient $ingredient)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Ingredient $ingredient)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Ingredient $ingredient)
     {
         //

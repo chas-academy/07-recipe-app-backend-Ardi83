@@ -1,5 +1,5 @@
 <?php
-
+ 
 use Illuminate\Http\Request;
 
 /*
@@ -16,3 +16,55 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::resource('recipes', 'RecipeController');
+
+Route::group(['prefix' => 'recipes'], function(){
+    Route::apiResource('/{recipe}/comments', 'CommentController')->only([
+        'index'
+    ]);
+});
+
+Route::group(['prefix' => 'recipes'], function(){
+    Route::apiResource('/{recipe}/meal', 'MealController')->only([
+        'index'
+    ]);
+});
+
+Route::group(['prefix' => 'recipes'], function(){
+    Route::apiResource('/{recipe}/ingredients', 'IngredientController');
+});
+
+Route::get('meals', [
+    'uses' => 'MealsController@index',
+    'as' => 'Meals'
+]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Route::get(
+//     'recipes/{recipe}/relationship/meal',
+//     [
+//         'uses' => \App\Http\Controllers\RecipeRelationshipController::class . '@meal',
+//         'as' => 'recipes.relationship.meal',
+//     ]
+//     );
+
+// Route::get(
+//     'recipes/{recipe}/meal',
+//     [
+//         'uses' => \App\Http\Controllers\RecipeRelationshipController::class . '@meal',
+//         'as' => 'recipes.meal',
+//     ]
+//     );
