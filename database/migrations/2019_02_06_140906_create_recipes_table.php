@@ -15,15 +15,13 @@ class CreateRecipesTable extends Migration
     {
         Schema::create('recipes', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedSmallInteger('avarage_rank')->nullable();
-            $table->integer('sauce_id')->unsigned();
-            $table->integer('meal_id')->unsigned();
-            $table->integer('salad_id')->unsigned();
+            // $table->integer('meal_id')->unsigned();
+            $table->string('author')->nullable();
+            $table->string('title')->nullable();
+            $table->text('instructure');
             $table->timestamps();
 
-            $table->foreign('sauce_id')->references('id')->on('sauces');
-            $table->foreign('meal_id')->references('id')->on('meals');
-            $table->foreign('salad_id')->references('id')->on('salads');
+            // $table->foreign('meal_id')->references('id')->on('meals')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
