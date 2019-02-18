@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Recipe;
 use App\Meal;
-use App\http\Resources\RecipesResource;
-use App\http\Resources\RecipeResource;
-use App\http\Requests\RecipeRequest;
+use App\Http\Resources\RecipesResource;
+use App\Http\Resources\RecipeResource;
+use App\Http\Requests\RecipeRequest;
+use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 
 class RecipeController extends Controller
@@ -35,6 +36,10 @@ class RecipeController extends Controller
         $recipe->instructure = $request->instructure;
         $id = $recipe->id;
         $recipe->save();
+
+        // $ingredientsArray = $request->ingredients;
+
+        // $recipe->ingredients()->createMany($ingredients);
         
         $meal = new Meal;
         $meal->recipe_id = $recipe->id;
@@ -53,7 +58,7 @@ class RecipeController extends Controller
 
         return response([
         'data' => new RecipeResource($recipe)
-        ],201);
+        ],Response::HTTP_CREATED);
     }
 
     public function show(Recipe $recipe)
@@ -71,14 +76,13 @@ class RecipeController extends Controller
             return [
                 $recipe->update($request->all()),
                 $recipe->meal->update($request->all()),
-                // response([new RecipeResource($recipe)],201)
-            ];
-            // return 
+                response([new RecipeResource($recipe)],Response::HTTP_CREATED)
+            ]; 
     }
 
     public function destroy(Request $request, Recipe $recipe)
     {           
             $recipe->delete();
-            return response(null,204);
+            return response(null,Response::HTTP_NO_CONTENT);
     }
 }
