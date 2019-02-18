@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Ingredient;
 use App\Recipe;
-use App\Http\Requests\IngredientRequest;
-use App\http\Resources\IngredientResource;
 use Illuminate\Http\Request;
+use App\Http\Requests\IngredientRequest;
+use App\Http\Resources\IngredientResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class IngredientController extends Controller
 {
     
     public function __construct()
     {
-        $this->middleware('auth:api')->except('index', 'show');
+        // $this->middleware('auth:api')->except('index', 'show');
     }
 
     public function index(Recipe $recipe)
@@ -21,11 +22,21 @@ class IngredientController extends Controller
         return IngredientResource::collection($recipe->ingredients);
     }
 
-    public function create()
-    {
-        //
-    }
 
+    public function show(Recipe $recipe, Ingredient $ingredient)
+    {
+        // $ingredients = 
+        foreach($ingredient->recipes as $recipe) {
+            return [
+                "id" => $ingredient->id,
+                "name" => $ingredient->name,
+                "amount" => $recipe->pivot->amount,
+            ];
+            response(Response::HTTP_OK);
+        }
+        // $ingredient->recipes()->pivot('amount')
+    }
+            
 
     public function store(Recipe $recipe, IngredientRequest $request)
     {
@@ -37,30 +48,29 @@ class IngredientController extends Controller
         $ingredient->name = $request->name;
         $id = $ingredient->id;
         $ingredient->save();
-        $ingredient->amount = $ingredient->recipes()->attach($recipe, ['amount' => $request->amount]);
-        
+        $ingredient->recipes->pivot->amount = $ingredient->recipes()->attach($recipe, ['amount' => $request->amount]);
         return response([
             'data' => new IngredientResource($ingredient)
-        ],201);
+        ],Response::HTTP_CREATED);
+        
     }
 
-    public function show(Ingredient $ingredient)
+    public function update(Recipe $recipe, Ingredient $ingredient,Request $request)
     {
-        //
+        $ingredient->update([
+            $ingredient->name = $request->name,
+            $id = $ingredient->id,
+            ]);
+            $ingredient->recipes()->updateExistingPivot($recipe->id, ['amount' => $request->amount]);     
+    
+            return response([
+                'Response' =>  "Updated successfully" ],Response::HTTP_OK);
     }
 
-    public function edit(Ingredient $ingredient)
-    {
-        //
-    }
 
-    public function update(Request $request, Ingredient $ingredient)
+    public function destroy(Recipe $recipe, Ingredient $ingredient)
     {
-        //
-    }
-
-    public function destroy(Ingredient $ingredient)
-    {
-        //
+        $ingredient->delete();
+        return response(null,Response::HTTP_NO_CONTENT);
     }
 }

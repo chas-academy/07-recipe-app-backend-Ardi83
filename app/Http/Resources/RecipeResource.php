@@ -15,7 +15,6 @@ class RecipeResource extends JsonResource
     public function toArray($request)
     {
         return [
-        'recipe' => [
             'id' => $this->id,
             'author' => $this->author ? $this->author : 'Uknown source',
             'title' => $this->title,
@@ -41,9 +40,7 @@ class RecipeResource extends JsonResource
             ],
 
             'ingredients' => new IngredientsIdentifierResource($this->ingredients),
-            'comments' => new RecipeCommentsRelationshipResource($this->comments),
-
-        ],
+            'comments' => new RecipeCommentsRelationshipResource($this->comments)
         ];
     }
 }

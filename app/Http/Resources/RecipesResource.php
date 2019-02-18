@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\http\Resources\RecipeResource;
+use App\Http\Resources\RecipeResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class RecipesResource extends ResourceCollection

@@ -13,32 +13,46 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::resource('recipes', 'RecipeController');
+Route::resource('recipes', 'RecipeController')->middleware('cors');
 
-Route::group(['prefix' => 'recipes'], function(){
+Route::group([
+    'middleware' => 'cors',
+    'prefix' => 'recipes'
+], function(){
     Route::apiResource('/{recipe}/comments', 'CommentController')->only([
         'index'
     ]);
 });
 
-Route::group(['prefix' => 'recipes'], function(){
+Route::group([
+    'middleware' => 'cors',
+    'prefix' => 'recipes'
+], function(){
     Route::apiResource('/{recipe}/meal', 'MealController')->only([
         'index'
     ]);
 });
 
-Route::group(['prefix' => 'recipes'], function(){
+Route::group([
+    'middleware' => 'cors',
+    'prefix' => 'recipes'
+], function(){
     Route::apiResource('/{recipe}/ingredients', 'IngredientController');
 });
 
 Route::get('meals', [
     'uses' => 'MealsController@index',
     'as' => 'Meals'
-]);
+])->middleware('cors');
+
+Route::get('ingredients', [
+    'uses' => 'IngredientsController@index',
+    'as' => 'Ingredients'
+])->middleware('cors');
 
 
 
