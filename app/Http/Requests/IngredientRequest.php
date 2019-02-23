@@ -25,8 +25,9 @@ class IngredientRequest extends FormRequest
     {
         return [
             // 'id' => 'required',
-            'name' => 'required|unique:ingredients',
-            'amount' => 'required'
+            // 'name' => 'required',
+            // 'amount' => 'required'
+          
         ];
     }
 }

@@ -21,17 +21,15 @@ Route::resource('recipes', 'RecipeController')->middleware('cors');
 
 Route::group([
     'middleware' => 'cors',
-    'prefix' => 'recipes'
-], function(){
+    'prefix' => 'recipes'], function(){
     Route::apiResource('/{recipe}/comments', 'CommentController')->only([
         'index'
-    ]);
+    ])->middleware('cors');
 });
 
 Route::group([
     'middleware' => 'cors',
-    'prefix' => 'recipes'
-], function(){
+    'prefix' => 'recipes'], function(){
     Route::apiResource('/{recipe}/meal', 'MealController')->only([
         'index'
     ]);
@@ -39,8 +37,7 @@ Route::group([
 
 Route::group([
     'middleware' => 'cors',
-    'prefix' => 'recipes'
-], function(){
+    'prefix' => 'recipes'], function(){
     Route::apiResource('/{recipe}/ingredients', 'IngredientController');
 });
 
