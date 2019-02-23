@@ -22,8 +22,8 @@ class CreateMealsTable extends Migration
             $table->enum('type', ['starter', 'snack', 'main_course', 'dessert', 'salad', 'sauce']);
             $table->enum('allergic_type',['normal', 'vegan', 'vegetarian', 'lactoseFree', 'glutenFree'])->default('normal');
             $table->float('energy')->nullable();
-            $table->time('preparing_time')->nullable();
-            $table->time('cooking_time')->nullable();
+            $table->string('preparing_time')->nullable();
+            $table->string('cooking_time')->nullable();
             $table->string('image');
             $table->timestamps();
 

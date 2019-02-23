@@ -9,7 +9,7 @@ use App\Http\Requests\IngredientRequest;
 use App\Http\Resources\IngredientResource;
 use Symfony\Component\HttpFoundation\Response;
 
-class IngredientController extends Controller
+class IngredientController extends Controller 
 {
     
     public function __construct()
@@ -36,24 +36,29 @@ class IngredientController extends Controller
         }
         // $ingredient->recipes()->pivot('amount')
     }
-            
 
     public function store(Recipe $recipe, IngredientRequest $request)
-    {
-        // $ingredient = Ingredient::create(
-        //     $request->all()
-        // );
-
-        $ingredient = new Ingredient;
-        $ingredient->name = $request->name;
-        $id = $ingredient->id;
-        $ingredient->save();
-        $ingredient->recipes->pivot->amount = $ingredient->recipes()->attach($recipe, ['amount' => $request->amount]);
-        return response([
-            'data' => new IngredientResource($ingredient)
-        ],Response::HTTP_CREATED);
-        
+    {     
+        // We can implement validation on request body model state.
+        if (1 == 1)
+        {
+            for ($i=0; $i < count($request->all()) ; $i++)
+            { 
+                $ingredient = new Ingredient;   
+                $ingredient->name = $request[$i]['name'];
+                $id = $ingredient->id;
+                $ingredient->save();
+                $ingredient->recipes()->attach($recipe, ['amount' => $request[$i]['amount']]);
+                    
+            }
+            return response(Response::HTTP_CREATED);
+        }
+        else
+        {
+            return response(Response::HTTP_BAD_REQUEST);
+        }
     }
+
 
     public function update(Recipe $recipe, Ingredient $ingredient,Request $request)
     {
@@ -64,7 +69,8 @@ class IngredientController extends Controller
             $ingredient->recipes()->updateExistingPivot($recipe->id, ['amount' => $request->amount]);     
     
             return response([
-                'Response' =>  "Updated successfully" ],Response::HTTP_OK);
+                'Response' => 'Updated successfully'
+            ],Response::HTTP_OK);
     }
 
 

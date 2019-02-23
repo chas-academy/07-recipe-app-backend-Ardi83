@@ -28,7 +28,7 @@ class RecipeController extends Controller
         
     }
 
-    public function store(Recipe $recipe, RecipeRequest $request)
+    public function store(Request $request)
     {
         $recipe = new Recipe;
         $recipe->author = $request->author;
@@ -37,10 +37,7 @@ class RecipeController extends Controller
         $id = $recipe->id;
         $recipe->save();
 
-        // $ingredientsArray = $request->ingredients;
 
-        // $recipe->ingredients()->createMany($ingredients);
-        
         $meal = new Meal;
         $meal->recipe_id = $recipe->id;
         $meal->name = $request->name;
@@ -55,7 +52,7 @@ class RecipeController extends Controller
         $id = $meal->id;
         $meal->save();
         
-
+    
         return response([
         'data' => new RecipeResource($recipe)
         ],Response::HTTP_CREATED);
