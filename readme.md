@@ -1,3 +1,7 @@
+Here is finilized link : http://recipe-backend.ardinasiri.chas.academy
+
+
+
 # Uppgiften
 
 I denna uppgift ska du bygga vidare på applikationen med ramverket Angular. Applikationen ska nu utökas och fungera både som en samling för recept men också en inhandlingslista över ingredienser som kan användas vid inköp. För denna uppgift kommer ni även att behöva bygga ut ett RESTful API i **Laravel som nyttjas i frontend från föregående uppgift.**
