@@ -3,7 +3,7 @@
 
 Click on button below to change password.
 
-@component('mail::button', ['url' => 'http://localhost:4200/response-password-reset?token='.$token])
+@component('mail::button', ['url' => 'http://recipe.ardinasiri.me/response-password-reset?token='.$token])
 Reset Password
 @endcomponent
 

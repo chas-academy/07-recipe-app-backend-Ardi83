@@ -19,19 +19,25 @@ Route::group([
 
 Route::resource('recipes', 'RecipeController');
 
-Route::group(['prefix' => 'recipes'], function(){
+Route::group([
+
+    'prefix' => 'recipes'], function(){
     Route::apiResource('/{recipe}/comments', 'CommentController')->only([
         'index'
     ]);
 });
 
-Route::group(['prefix' => 'recipes'], function(){
+Route::group([
+
+    'prefix' => 'recipes'], function(){
     Route::apiResource('/{recipe}/meal', 'MealController')->only([
         'index'
     ]);
 });
 
-Route::group(['prefix' => 'recipes'], function(){
+Route::group([
+
+    'prefix' => 'recipes'], function(){
     Route::apiResource('/{recipe}/ingredients', 'IngredientController');
 });
 
