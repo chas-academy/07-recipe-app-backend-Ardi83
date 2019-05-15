@@ -10,6 +10,9 @@ Route::group([
     Route::post('signup', 'AuthController@signup');
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', 'AuthController@refresh');
+    Route::post('addToList', 'AuthController@addToList');
+    Route::post('removeFromList', 'AuthController@removeFromList');
+    Route::get('getFavList', 'AuthController@getFavList');
     Route::post('me', 'AuthController@me');
     Route::post('sendPasswordResetLink', 'ResetPasswordController@sendEmail');
     Route::post('resetPassword', 'ChangePasswordController@process');
@@ -18,7 +21,6 @@ Route::group([
 
 
 Route::resource('recipes', 'RecipeController');
-
 Route::group([
 
     'prefix' => 'recipes'], function(){

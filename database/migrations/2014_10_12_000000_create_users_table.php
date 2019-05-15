@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('favRecipes')->nullable()->references('id')->on('recipes')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });
